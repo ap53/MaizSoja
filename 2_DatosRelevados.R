@@ -31,7 +31,7 @@ dptos.mapa <- ggmap(dptos.ggmap)
 dptos.mapa <- dptos.mapa + geom_polygon(aes(x=long, y=lat, group=group), 
                                         fill='yellow',color='red', 
                                         data=dptos.earth.df, alpha=0.2)
-dptos.mapa
+print(dptos.mapa)
 
 
 
@@ -44,7 +44,7 @@ dptos.mapa <- dptos.mapa + geom_polygon(aes(x=long, y=lat, group=group),
                                         data=dptos.earth.df, alpha=0.2)
 dptos.mapa <- dptos.mapa + geom_text(aes(x = lon, y = lat, label = NOMDEP1),
                                      data= centros, alpha = 1, color = "red", cex = 7)
-dptos.mapa
+print(dptos.mapa)
 
 
 
@@ -72,7 +72,7 @@ p.r.mapa <- p.r.mapa + geom_polygon(aes(x=long, y=lat, group=group),
                                     data=path.rows.df, alpha=0.2)
 p.r.mapa <- p.r.mapa + geom_text(aes(x = lon, y = lat, label = as.character(PR)),
                                  data= p.r.centros, alpha = 1, color = "red", cex = 3)
-p.r.mapa
+print(p.r.mapa)
 
 
 
@@ -82,7 +82,7 @@ p.r.mapa
 p.r.mapa2 <- p.r.mapa + geom_polygon(aes(x=long, y=lat, group=group), 
                                      fill='yellow',color='red', 
                                      data=dptos.earth.df, alpha=0.2)
-p.r.mapa2
+print(p.r.mapa2)
 
 
 ## @knitr pathRows_ampliado
@@ -102,13 +102,13 @@ p.r.mapa <- p.r.mapa + geom_polygon(aes(x=long, y=lat, group=group),
                                     data=path.rows.zoom.df, alpha=0.2)
 p.r.mapa <- p.r.mapa + geom_text(aes(x = lon, y = lat, label = as.character(PR)),
                                  data= p.r.centros, alpha = 1, color = "red", cex = 3)
-# p.r.mapa
+# print(p.r.mapa)
 
 # Agrego los departamentos
 p.r.mapa2 <- p.r.mapa + geom_polygon(aes(x=long, y=lat, group=group), 
                                      fill='yellow',color='red', 
                                      data=dptos.earth.df, alpha=0.2)
-p.r.mapa2
+print(p.r.mapa2)
 
 
 
