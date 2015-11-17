@@ -127,6 +127,8 @@ p.r.mapa2
 Vemos que necesitamos las imágenes 228082, 227082 y 227083.
 Podemos dejar de lado la 227083.  
 
+Es interesante que hay una zona importante del Departamento de San Martín que está en dos fotos diferentes: esto tal vez pueda servir para reemplazar alguna foto con nubes, o incluso para determinar si se puede distinguir alguna evolución en sólo 24h.  
+
 ### Años más bien secos  
 
 Se usaron datos de las campañas 2012/2013 y 2013/2014 por tratarse de años de pocas lluvias, a fin de maximizar la cantidad de fotos sin nubes.  
