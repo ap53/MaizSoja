@@ -1,0 +1,47 @@
+## Algunas intuiciones a desarrollar  
+La situación concreta es que los equipos técnicos del MAGyP saben que se ha intentado ograr la discriminación deseada pero que no se ha logrado resolver el problema. 
+Asumo que el análisis de fotos puntuales de Landsat y/o Modis no tienen suficiente información como para diferenciar ambos cultivos.
+
+### Agregar atributos  
+
+Diferentes fechas: podemos yuxtapones los datos de fotos en difentes fechas y calcular diferencias entre diferentes fotos.
+
+DEM
+Las alturas de un pixel y la diferencia con los adyacentes pueden dar idea de la orientación de la pendiente, variable que podría incidir en las reflectancias detectadas.
+
+Lotes referencia: podemos usar lotes 'testigo', por ejemplo de campos del INTA, en los que se sepa a ciencia cierta que corresponden a soja o a maíz. Podemos entonces agregar atributos que midan de alguna manera la 'distancia' de un píxel cuanquiera a estas referencias. Esto le debería dar cierta estabilidad al modelo frente a cambios climáticos de año a año.
+
+Otros satelites: podemos combinar información de otra fuentes, por ejemplo Modis y/o Spot, cuidando de considerar los aspectos relacionados con el tamaño del pixel.
+
+### Búsqueda de interacciones y alinealidades  
+Si necesario el agregado de variables 'razonadas', no es menos necesario algún proceso de expansión y posterior selección de atributos.  
+Por este motivo se puso especial énfasis en algoritmos que automatizan este proceso de selección, en particular SVM y NN.  
+
+### Problemas de georeferenciación  
+Es común que cuando se superpone un archivo georeferenciado sobre un Google Map o sobre Google Earth, se noten pequeñas diferencias de posición: un camino puede estar desplazado varios metros. Habrá que estudiar cuidadosamente que los píxeles de diferentes fuentes realmente correspondan al mismo punto físico.  
+
+### Problemas de nubes  
+En el caso de fotos con nubes, tendremos datos faltantes en los datos, que intentaremos rellenar: lo podemos hacer interpolando la foto anterior y la posterior. Podemos tener varias situaciones:  
+- Que la foto sea la última disponible: se repetirá
+- Que una pequeña zona esté tapada por las nubes, pero que una parte importante de la foto se encuentre libre de ellas: se interpolaran los datos siguiendo la misma proporción que los lotes visibles.
+- Que toda la foto esté tapada por las nubes: la interpolación será lineal.
+
+### Trabajo en dos etapas
+1) Situación más favorable para detectar posibles mecanismos de diferenciación: Se extajeron únicamente datos de lotes claramente identificados como maíz o como soja de primera a fin de estudiar distribuciones e identificar posibles interacciones que permitiesen separar ambas poblaciones. En ésta no se intentó buscar intervalos de confianza ni bondad de ajuste, sino únicamente buscar mecanismos posibles de separación.  
+
+2) Una vez lograda esta separación, se estudiaron los segmentos completos a fin de separar también los demás cultivos.
+
+
+## Algoritmos  
+### Etapa 1  
+a) Regresión logística: se consideraron las variables 'directas' con un proceso de regularización a fin de evitar inestabilidades del modelo. No se esperaba demasiado de este modelo sino que la idea era conocer el 'piso' para el problema.  
+
+b) SVM
+
+c) Red neuronal (una o dos capas ocultas como máximo)  
+
+d) [No sé si tiene sentido, pero sería divertido probar...] Deep learning
+
+### Etapa 2  
+Los mejor de la etapa 1, pero ahora discriminando otro tipo de cultivos (por ejemplo girasol) o pasturas o zonas habitadas...  
+

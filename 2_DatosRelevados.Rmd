@@ -1,0 +1,63 @@
+Si bien las variables independientes se extraen de imágenes satelitales, la variable independiente para entrenar el modelo, la 'verdad de campo' proviene de otra fuente: se trata de los relevamientos del MAGyP.
+
+
+Los datos recibidos provienen del corazón de la zona sojera.
+
+### Departamentos 
+Provincia de Santa Fé, departamentos de Iriondo, San Jerónimo, San Martín y Belgrano.
+
+Localización de los cuatro departamentos, leo el shapefile de departamentos recibido.
+```{r echo=FALSE}
+departamentos <- readOGR(dsn = "./Departamentos shapefiles", layer = "deptos_f5", verbose = FALSE)
+#plot(departamentos)
+```
+
+El shapefile contiene todo el país, me quedo con los 4 departamentos de interés.
+La provincia de Sante Fé es el #82.
+```{r ubicarDptos, echo=FALSE}
+dptos <- 
+  departamentos[departamentos$PROV == '82' & 
+                  departamentos$NOMDEP %in% c('BELGRANO', 'IRIONDO', 'SAN JERONIMO', 'SAN MARTIN'), ]
+
+# No sé todavía cómo los voy a usar, los guardo a mano en proyecciones de Google Earth y de Google Maps
+dptos.earth <- spTransform(dptos, CRS("+init=epsg:4326"))
+dptos.maps <- spTransform(dptos, CRS("+init=epsg:3857"))
+
+# dptos.maps@bbox
+
+```
+
+```{r verRegionGrande, echo=FALSE, message=FALSE, warning=FALSE}
+centros <- cbind(coordinates(dptos.earth), dptos.earth@data)
+names(centros)[1:2] <- c('lon', 'lat')
+
+dptos.earth.df <- fortify(dptos.earth)
+
+
+dptos.ggmap <- get_map(dptos.earth@bbox, zoom = 7, maptype = "terrain", source = "google")
+dptos.mapa <- ggmap(dptos.ggmap)
+dptos.mapa <- dptos.mapa + geom_polygon(aes(x=long, y=lat, group=group), 
+                                        fill='yellow',color='red', 
+                                        data=dptos.earth.df, alpha=0.2)
+dptos.mapa
+
+```
+
+Expando la región de interés:  
+```{r verRegionPrep, echo=FALSE, message=FALSE, warning=FALSE}
+
+dptos.ggmap <- get_map(dptos.earth@bbox, maptype = "terrain", source = "google")
+dptos.mapa <- ggmap(dptos.ggmap)
+dptos.mapa <- dptos.mapa + geom_polygon(aes(x=long, y=lat, group=group), 
+                                        fill='yellow', size=.2,color='red', 
+                                        data=dptos.earth.df, alpha=0.2)
+dptos.mapa <- dptos.mapa + geom_text(aes(x = lon, y = lat, label = NOMDEP1),
+              data= centros, alpha = 1, color = "red", cex = 7)
+dptos.mapa
+
+```
+
+### Años más bien secos  
+
+Se usaron datos de las campañas 2012/2013 y 2013/2014 por tratarse de años de pocas lluvias, a fin de maximizar la cantidad de fotos sin nubes.  
+

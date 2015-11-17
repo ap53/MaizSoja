@@ -1,0 +1,54 @@
+---
+title: "Esquema Tesis v1"
+author: "Antoine Thibaud"
+date: "8 de noviembre de 2015"
+output: html_document
+---
+```{r Opciones, echo=FALSE}
+library(knitr)
+#opts_chunk$set(comment=NA, fig.width=9, fig.height=6, autodep=TRUE, options(digits = 2), dev='jpeg')
+```
+
+```{r loadLibs, echo=FALSE, message=FALSE}
+library(dplyr, verbose = FALSE)
+library(rgdal)
+#library(dismo)
+library(RgoogleMaps)
+library(plotKML)
+library(ggplot2)
+library(ggmap)
+```
+
+---
+```{r setup, include=FALSE}
+fig.caption.num = local({
+  i = 0
+  function(x) {
+    i <<- i + 1
+    paste('Figura ', i, ': ', x, sep = '')
+  }
+})
+```
+
+# Esquema Tesis  
+```{r Objetivos, child='1_Objetivos.Rmd'}
+
+```
+
+## Datos disponibles  
+```{r Datos, child='2_DatosRelevados.Rmd'}
+
+```
+
+
+## Estrategias  
+```{r Estrategias, child='3_Estrategias.Rmd'}
+
+```
+
+## Preparación de los datos  
+```{r PreparacionDatos, child='4_PreparacionDatos.Rmd'}
+
+```
+
+

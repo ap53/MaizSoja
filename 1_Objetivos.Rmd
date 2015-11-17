@@ -1,0 +1,69 @@
+## Problema a analizar y objetivos del trabajo  
+### Estimación de cosecha en la República Argentina  
+#### Estimación de la superficie sembrada con cultivos extensivos
+De acuerdo a "Método de Segmentos Aleatorios" [1], del Ministerio de Agricultura, Ganadería y Pesca (MAGyP), 
+"la estimación de la superficie agrícola tiene una gran relevancia estratégica y es requerida por numerosos actores económicos, sociales y políticos para planificar acciones, reducir incertidumbre y mejorar la asignación de los recursos".
+
+"La estimación de la superficie sembrada de los principales cultivos extensivos en el país se llevó a cabo históricamente mediante el denominado 'método subjetivo', que consiste en relevar estimaciones de "informantes calificados... [y mejorarlos] a partir de la incorporación de controles y validaciones con datos provenientes de otras fuentes comerciales y productivas como ser acopiadores, cooperativas, productores, distribuidores de agroquímicos y semillas, etc."
+
+Si bien sigue siendo necesario contar con informantes calificados, el Ministerio determinó la necesidad de corregir la subjetividad del método subjetivo: para ello desarrolló el denominado "Método de segmentos Aleatorios".
+
+#### Método de segmentos Aleatorios  
+El website del MAGyP explica que "este método contempla la utilización de técnicas de teledetección basadas en imágenes satelitales de alta y mediana resolución, integradas en un sistema de información geográfica (GIS),  el control e interpretación de los resultados obtenidos a través de operativos a campo y el  procesamiento y difusión de la información generada por la aplicación de esta metodología" y que "consiste en la selección de una muestra aleatoria de puntos dentro de estratos homogéneos predeterminados".
+  
+#### El papel de las imágenes satelitales  
+[Desarrollar]
+A partir de una cantidad de puntos geográficos elegidos aleatoriamente, la imágenes satelitales de alta y mediana resolución (Landsat, Spot, Modis) y del programa del Google Earth para la ejecución de las siguientes tareas:  
+* estratificación de zonas homogéneas  
+* distribución de puntos sobre la superficie territorial   
+* diseño de segmentos  
+* delineado y especificación del uso de los lotes como verdad terrestre  
+* medición exacta de las superficies seleccionadas y de las superficies para expandir la muestra  
+
+En otras palabras, las imágenes se utilizan en la preparación de los viajes a campo, para ubicar y delinear segmentos y Unidades de Uso de Suelo (UUS), que son los lotes individuales dentro de cada segmento.
+No tienen uso directo en la determinación de los cultivos ni en la estimación de la superficie sembrada de cada uno de ellos.
+
+#### Un tema no resuelto: discriminación de cultivos en base a información satelital disponible  
+[Desarrollar]
+La idea de estimar las superficies cultivadas directamente a través del análisis de imágenes disponibles gratuitamente es tentadora.
+Esta posibilidad está hoy limitada por falta de una técnica adecuada para discriminar los diferentes cultivos en base a dichas imágenes. En conversaciones con diversos expertos, dos casos fueron nombrados en reiteradas oportunidades: __trigo vs. cebada__ en la cosecha fina y __soja vs. maíz__ en la cosecha gruesa.  
+
+[OJO, documentar este comentario de E. Basile]
+En países del hemisferio norte, las fechas de siembra son mucho más homogéneas que en la Argentina y esto permite mejorar estas estimaciones.
+En nuestro país, debido a [...] estas fechas son muy escalonadas y a la fecha no se han desarrollado modelos que ayuden a estimar las superficies con la precisíon adecuada.
+
+### Objetivo del trabajo
+#### Enunciado  
+El objetivo de este trabajo fue investigar por diversos caminos si las técnicas de data mining permitían discriminar cultivos en la Pampa húmeda en base a fotos satelitales.
+
+Debido a la importancia de la soja en la economía Argentina, decidí atacar específicamente el tema __soja vs. maíz__ .
+
+#### Precisión actual vs buscada  
+La precisión actual de las estimaciones del MAGyP en cuanto a superficie de soja se expresa en porcentaje a través del denominado coeficiente de variación (cv): es el cociente entre el error estándar y la estimación de las superficies de cada UUS. [Desarrollar]  
+
+Los cv que obtiene el MAGyP son muy buenos: para la soja, en la región sur de la Provincia de Santa Fé, rondan el 5%. Para otros cultivos, debido a que la superficie sembrada es mucho menor, el error sube y para el maíz, por ejemple, el cv sube a más de 15 o 20%.
+
+[Consultar con Marcelo]
+Para estimar la calidad del modelo usé la 'medida F', es decir la media armónica entre la precisión y el recall.
+
+El criterio de éxito para el modelo a constuir fue de x%
+
+#### Fecha en la que es preciso obtener resultados  
+Los viajes a campo para la cosecha fina se realizan entre octubre y noviembre. Los de la cosecha gruesa durante el mes de febrero. Estas son las fechas tempranas en las que un observador humano puede distinguir los diferentes cultivos [Verificar esta afirmación].
+
+A estos viajes les sigue un trabajo manual que permite obtener las estimaciones: la duración de esta fase es de ¿2 semanas?
+
+Con respecto a las fechas para obtener estimaciones de superficies sembradas, el objetivo es obtener un modelo con la performance adecuada en la misma fecha aproximada que los resultados actuales.  
+
+#### Estudio de la estabilidad del modelo y de su generalización  
+La agricultura es una actividad muy sensible a las variaciones climáticas. Otro objetivo de este trabajo fue estudiar la performance del modelo en otras cosechas. Esto es importante por dos motivos diferentes:  
+* En los años lluviosos, la proporción de fotos con muchas nubes subirá: quise estudiar la degradación de la performance si, para las mismas campañas estudiadas, eliminaba cantidades crecientes de imágenes.  
+* Además es de esperar que el desarrollo de las plantas sea diferente y que el modelo ya no sea adecuado: se estudió la performance en diferentes años.  
+
+También estudíé la performance que se podría obtener quince días y un mes antes de dicha fecha.  
+
+Se estudió la performance en otras zonas agrícolas, no tan favorables al cultivo de la soja: ¿dónde?  
+
+
+
+
