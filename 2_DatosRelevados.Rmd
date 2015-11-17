@@ -57,6 +57,76 @@ dptos.mapa
 
 ```
 
+
+### Path/Rows de las imágenes Landsat
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+path.rows.all <- readOGR(dsn = "./wrs2_asc_desc", layer = "wrs2_asc_desc", verbose = FALSE)
+
+# Es gigante, lo recorto (ya espié en http://earthexplorer.usgs.gov/ cuales son los paths relevantes)
+path.rows <- 
+  path.rows.all[path.rows.all$PATH %in% c('225', '226', '227', '228') & 
+                  path.rows.all$ROW %in% c('81', '82', '83', '84'), ]
+                                              
+path.rows.df <- fortify(path.rows)
+rm(path.rows.all)
+
+p.r.centros <- cbind(coordinates(path.rows), path.rows@data)
+names(p.r.centros)[1:2] <- c('lon', 'lat')
+
+p.r.ggmap <- get_map(path.rows@bbox, zoom = 6, maptype = "terrain", source = "google")
+p.r.mapa <- ggmap(p.r.ggmap)
+p.r.mapa <- p.r.mapa + geom_polygon(aes(x=long, y=lat, group=group), 
+                                        fill='green', size=.2,color='blue', 
+                                        data=path.rows.df, alpha=0.2)
+p.r.mapa <- p.r.mapa + geom_text(aes(x = lon, y = lat, label = as.character(PR)),
+              data= p.r.centros, alpha = 1, color = "red", cex = 3)
+p.r.mapa
+
+```
+
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Agrego los departamentos
+p.r.mapa2 <- p.r.mapa + geom_polygon(aes(x=long, y=lat, group=group), 
+                                        fill='yellow',color='red', 
+                                        data=dptos.earth.df, alpha=0.2)
+p.r.mapa2
+
+```
+
+Zoom-in  
+Ampliamos la imagen:
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+path.rows.zoom <- 
+  path.rows[path.rows$PATH %in% c( '227', '228') & 
+                  path.rows$ROW %in% c('82', '83'), ]
+                                              
+path.rows.zoom.df <- fortify(path.rows.zoom)
+
+p.r.centros <- cbind(coordinates(path.rows.zoom), path.rows.zoom@data)
+names(p.r.centros)[1:2] <- c('lon', 'lat')
+
+p.r.ggmap <- get_map(path.rows.zoom@bbox, zoom = 7, maptype = "terrain", source = "google")
+p.r.mapa <- ggmap(p.r.ggmap)
+p.r.mapa <- p.r.mapa + geom_polygon(aes(x=long, y=lat, group=group), 
+                                        fill='green', size=.2,color='blue', 
+                                        data=path.rows.zoom.df, alpha=0.2)
+p.r.mapa <- p.r.mapa + geom_text(aes(x = lon, y = lat, label = as.character(PR)),
+              data= p.r.centros, alpha = 1, color = "red", cex = 3)
+# p.r.mapa
+
+# Agrego los departamentos
+p.r.mapa2 <- p.r.mapa + geom_polygon(aes(x=long, y=lat, group=group), 
+                                        fill='yellow',color='red', 
+                                        data=dptos.earth.df, alpha=0.2)
+p.r.mapa2
+
+```
+
+Vemos que necesitamos las imágenes 228082, 227082 y 227083.
+Podemos dejar de lado la 227083.  
+
 ### Años más bien secos  
 
 Se usaron datos de las campañas 2012/2013 y 2013/2014 por tratarse de años de pocas lluvias, a fin de maximizar la cantidad de fotos sin nubes.  
