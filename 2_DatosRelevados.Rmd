@@ -96,7 +96,7 @@ p.r.mapa2
 ```
 
 Zoom-in  
-Ampliamos la imagen:
+Ampliamos la imagen:  
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 path.rows.zoom <- 
   path.rows[path.rows$PATH %in% c( '227', '228') & 
